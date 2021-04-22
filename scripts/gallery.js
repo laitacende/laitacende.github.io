@@ -54,6 +54,7 @@ window.onload = function() {
     document.getElementById("newfinish").onclick = newGameClose;
     document.getElementById("new").onclick = newGame;
     document.getElementById("reset").onclick = resetGame;
+    //document.getElementById("reset").addEventListener("touchend", resetGame, false);
     document.getElementById("closepreview").onclick = closePreview;
     document.getElementById("preview").onclick = openPreview;
     for (var i = 1; i <= 12; i++) {

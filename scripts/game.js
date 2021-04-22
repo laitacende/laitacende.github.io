@@ -86,13 +86,15 @@ function shufflePuzzle() {
        }
     }
     _pieces.unshift(_empty);
-    document.onclick = movePiece;
-   // document.onclick = null;
-    document.onmousemove = highlight;
+    //document.onclick = movePiece;
+    document.onclick = null;
+   //  document.onmousemove = highlight;
     // document.ontouchstart = highlight;
     //document.ontouchend = movePiece;
-    document.addEventListener('touchstart', highlightTouch, { passive: false });
-    document.addEventListener('touchend', movePieceTouch, { passive: false });
+    _canvas.addEventListener('click', movePiece, {passive: false});
+    _canvas.addEventListener('mousemove', highlight, {passive: false});
+    _canvas.addEventListener('touchstart', highlight, {passive: false});
+    _canvas.addEventListener('touchend', movePiece, {passive: false});
 }
 
 function getPieceClicked(mouse) {
@@ -136,13 +138,18 @@ function getEmpty() {
 }
 
 function highlight(event) {
-   // event.preventDefault();
+    // event.preventDefault();
     let mouse = {};
     let rect = _canvas.getBoundingClientRect();
     let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
     let scaleY = _canvas.height / rect.height;
     mouse.x = (event.clientX - rect.left) * scaleX;
     mouse.y = (event.clientY - rect.top) * scaleY;
+    if (Number.isNaN(mouse.x) || Number.isNaN(mouse.y)) { // touch
+        let touches = event.changedTouches;
+        mouse.x = (touches[0].pageX - rect.left) * scaleX;
+        mouse.y = (touches[0].pageY - rect.top) * scaleY;
+    }
     let values = getPieceClicked(mouse);
     if (values != null) {
         let current = values[0];
@@ -160,43 +167,21 @@ function highlight(event) {
             }
         }
     }
-}
-
-function highlightTouch(event) {
-    event.preventDefault();
-    let mouse = {};
-    let rect = _canvas.getBoundingClientRect();
-    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
-    let scaleY = _canvas.height / rect.height;
-    mouse.x = (event.clientX - rect.left) * scaleX;
-    mouse.y = (event.clientY - rect.top) * scaleY;
-    let values = getPieceClicked(mouse);
-    if (values != null) {
-        let current = values[0];
-        for (let i = 0; i < _pieces.length; i++) {
-            if (_pieces[i].id !== -1) {
-                _stage.drawImage(_img, _pieces[i].sx, _pieces[i].sy, _pieces[i].width, _pieces[i].height,
-                    _pieces[i].xPos, _pieces[i].yPos, _pieces[i].width, _pieces[i].height);
-                if (checkIfNextToEmpty(current)) {
-                    _stage.save();
-                    _stage.fillStyle = "orange";
-                    _stage.globalAlpha = .03;
-                    _stage.fillRect(current.xPos, current.yPos, current.width, current.height);
-                    _stage.restore();
-                }
-            }
-        }
-    }
+    event.preventDefault(); // prevent double firing
 }
 
 function movePiece(event) {
-   // event.preventDefault();
     let mouse = {};
     let rect = _canvas.getBoundingClientRect();
     let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
     let scaleY = _canvas.height / rect.height;
     mouse.x = (event.clientX - rect.left) * scaleX;
     mouse.y = (event.clientY - rect.top) * scaleY;
+    if (Number.isNaN(mouse.x) || Number.isNaN(mouse.y)) { // touch
+        let touches = event.changedTouches;
+        mouse.x = (touches[0].pageX - rect.left) * scaleX;
+        mouse.y = (touches[0].pageY - rect.top) * scaleY;
+    }
     let values = getPieceClicked(mouse);
     if (values != null) {
         let current = values[0];
@@ -222,41 +207,7 @@ function movePiece(event) {
             }
         }
     }
-}
-
-function movePieceTouch(event) {
     event.preventDefault();
-    let mouse = {};
-    let rect = _canvas.getBoundingClientRect();
-    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
-    let scaleY = _canvas.height / rect.height;
-    mouse.x = (event.clientX - rect.left) * scaleX;
-    mouse.y = (event.clientY - rect.top) * scaleY;
-    let values = getPieceClicked(mouse);
-    if (values != null) {
-        let current = values[0];
-        let index = values[1];
-        let emptyIdx = getEmpty();
-        if (checkIfNextToEmpty(current)) {
-            [_pieces[index], _pieces[emptyIdx]] = [_pieces[emptyIdx], _pieces[index]];
-            console.log(index + " " + emptyIdx);
-            let tempX = _empty.xPos;
-            let tempY = _empty.yPos;
-            _empty.xPos = current.xPos;
-            _empty.yPos = current.yPos;
-            current.xPos = tempX;
-            current.yPos = tempY;
-            _stage.fillStyle = "#d54541";
-            _stage.fillRect(_empty.xPos, _empty.yPos, _empty.width, _empty.height);
-            _stage.drawImage(_img, current.sx, current.sy, current.width, current.height,
-                current.xPos, current.yPos, current.width, current.height);
-            // check if user won
-            if (checkIfFinish()) {
-                // restart game
-                document.getElementById("modalfinish").style.display = "block";
-            }
-        }
-    }
 }
 
 function resetGame() {
