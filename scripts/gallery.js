@@ -39,6 +39,7 @@ function check() {
 }
 
 function newGame() {
+    document.getElementById("cflex").style.display = "none";
     document.getElementById("instr1").style.display = "block";
     document.getElementById("gallery").style.display = "flex";
 }
