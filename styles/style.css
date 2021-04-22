@@ -1,0 +1,178 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 2em;
+}
+
+#canv {
+    /*height: 100%;*/
+    /*width: auto;*/
+    height: auto;
+    width: 90%;
+}
+
+.canvflex {
+    display: none;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    height: 100vh;
+    align-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+.gallerycontainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
+    width: auto;
+}
+
+.column {
+    max-width: 70%;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+.column img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: .5em;
+    margin-bottom: .5em;
+    vertical-align: middle;
+    width: 100%;
+    cursor: pointer;
+}
+
+.column img:hover {
+    opacity: .6;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* add scroll */
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.3); /* opacity to background */
+}
+
+.modal h1 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 1em;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 80%;
+}
+
+.close {
+    font-size: 2em;
+    float: right;
+    margin-right: .5em;
+}
+
+.close:hover,
+.close:focus {
+    color: orange;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn {
+    border: none;
+    margin-right: .5em;
+    background-color: orange;
+    border-radius: .5em;
+    padding: .5em;
+    cursor: pointer;
+}
+
+#startgame {
+    float: right;
+}
+
+#options {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1em;
+}
+
+@media (min-width: 72em), (orientation: landscape) and (max-width: 45em) {
+    #canv {
+        width: auto;
+        height: 90%;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .canvflex {
+        height: 100vh;
+        justify-content: space-evenly;
+    }
+
+    .column {
+        max-width: 55%;
+    }
+}
+
+@media (min-width: 85em) {
+    .canvflex {
+        flex-direction: row;
+    }
+
+    #options {
+        flex-direction: column;
+    }
+}
+
+
+@media (min-width: 55em) {
+    .column {
+        max-width: 20%;
+    }
+
+    .modal-content {
+        width: 30%;
+    }
+}
+
+/*@media (orientation: landscape) {*/
+
+/*    #canv {*/
+/*        width: auto;*/
+/*        height: 90%;*/
+/*    }*/
+
+/*    .canvflex {*/
+/*        height: 100vh;*/
+/*        border: solid red;*/
+/*    }*/
+/*}*/

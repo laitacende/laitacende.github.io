@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Fajna gra</title>
+        <script src="scripts/piece.js"></script>
+        <script src="scripts/game.js"></script>
+        <script src="scripts/gallery.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <h1 id="instr1">Wybierz obrazek</h1>
+        <div id="gallery" class="gallerycontainer">
+            <div class="column">
+                <img alt="obrazek 1" id="1img" src="images/1comp.jpg" />
+                <img alt="obrazek 2" id="2img" src="images/2comp.jpg" />
+                <img alt="obrazek 3" id="3img" src="images/3comp.jpg" />
+                <img alt="obrazek 4" id="4img"src="images/4comp.jpg" />
+            </div>
+            <div class="column">
+                <img alt="obrazek 5" id="5img" src="images/5comp.jpg" />
+                <img alt="obrazek 6" id="6img" src="images/6comp.jpg" />
+                <img alt="obrazek 7" id="7img" src="images/7comp.jpg" />
+                <img alt="obrazek 8" id="8img" src="images/8comp.jpg" />
+            </div>
+            <div class="column">
+                <img alt="obrazek 9" id="9img" src="images/9comp.jpg" />
+                <img alt="obrazek 10" id="10img" src="images/10comp.jpg" />
+                <img alt="obrazek 11" id="11img" src="images/11comp.jpg" />
+                <img alt="obrazek 12" id="12img" src="images/12comp.jpg" />
+            </div>
+        </div>
+
+        <div id="modalform" class="modal">
+            <div class="modal-content clearfix">
+                <span class="close" id="closeform">&times;</span>
+                <h1>Wprowadź parametry gry</h1>
+                <form name="parameters" id="gameparams">
+                    <label for="nocols">Liczba kolumn</label>
+                    <input id="nocols" type="number" value="4" name="cols" min="4" required size="1"/>
+                    <br>
+                    <br>
+                    <label for="norows">Liczba wierszy</label>
+                    <input id="norows" type="number" value="4" name="rows" min="4" required/>
+                    <input type="hidden" name="img" id="selectedimg"/>
+                    <br>
+                    <br>
+                    <input type="button" id="startgame" class="btn" value="Potwierdź"></inputbutton>
+                </form>
+            </div>
+        </div>
+        <div id="cflex" class="canvflex">
+            <div id="options">
+                <button class="btn" type="button" id="reset">Zacznij od początku</button>
+                <br>
+                <button class="btn" type="button" id="new">Nowa gra</button>
+            </div>
+            <canvas id="canv"></canvas>
+        </div>
+    </body>
+</html>
