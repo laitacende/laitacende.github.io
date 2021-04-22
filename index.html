@@ -50,11 +50,20 @@
                 </form>
             </div>
         </div>
+        <div id="modalpreview" class="modal">
+            <div class="modal-content clearfix" id="imgmodal">
+                <span class="close" id="closepreview">&times;</span>
+                <br>
+                <img id="previewimg" alt="Podgląd obrazka"/>
+            </div>
+        </div>
         <div id="cflex" class="canvflex">
             <div id="options">
                 <button class="btn" type="button" id="reset">Zacznij od początku</button>
                 <br>
                 <button class="btn" type="button" id="new">Nowa gra</button>
+                <br>
+                <button class="btn" type="button" id="preview">Podgląd</button>
             </div>
             <canvas id="canv"></canvas>
         </div>

@@ -125,6 +125,30 @@ h1 {
     margin-top: 1em;
 }
 
+#modalfinish .btn {
+    float: right;
+}
+
+#modalpreview img {
+    /*height: 50%;*/
+    width: 100%;
+}
+
+/*#modalpreview {*/
+/*    !*overflow: initial; !* add scroll *!*!*/
+/*    background-color: transparent;*/
+/*    width: 100%;*/
+/*}*/
+
+/*#imgmodal {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*#closepreview {*/
+/*    margin-right: auto;*/
+/*}*/
+
 @media (min-width: 72em), (orientation: landscape) and (max-width: 45em) {
     #canv {
         width: auto;

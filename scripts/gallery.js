@@ -18,6 +18,15 @@ function closeForm() {
     document.getElementById("modalform").style.display = "none";
 }
 
+function closePreview() {
+    document.getElementById("modalpreview").style.display = "none";
+}
+
+function openPreview() {
+    document.getElementById("modalpreview").style.display = "block";
+    document.getElementById("previewimg").src = document.getElementById("selectedimg").value;
+}
+
 function check() {
     var cols = document.getElementById("nocols").value;
     var rows = document.getElementById("norows").value;
@@ -45,6 +54,8 @@ window.onload = function() {
     document.getElementById("newfinish").onclick = newGameClose;
     document.getElementById("new").onclick = newGame;
     document.getElementById("reset").onclick = resetGame;
+    document.getElementById("closepreview").onclick = closePreview;
+    document.getElementById("preview").onclick = openPreview;
     for (var i = 1; i <= 12; i++) {
         document.getElementById(i + "img").onclick = openForm;
         loadIMG("images/" + i + ".jpg", i);
