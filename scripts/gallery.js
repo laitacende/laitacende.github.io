@@ -29,9 +29,22 @@ function check() {
     }
 }
 
+function newGame() {
+    document.getElementById("instr1").style.display = "block";
+    document.getElementById("gallery").style.display = "flex";
+}
+
+function newGameClose() {
+    document.getElementById("modalfinish").style.display = "none";
+    newGame();
+}
+
 window.onload = function() {
     document.getElementById("closeform").onclick = closeForm;
     document.getElementById("startgame").onclick = check;
+    document.getElementById("newfinish").onclick = newGameClose;
+    document.getElementById("new").onclick = newGame;
+    document.getElementById("reset").onclick = resetGame;
     for (var i = 1; i <= 12; i++) {
         document.getElementById(i + "img").onclick = openForm;
         loadIMG("images/" + i + ".jpg", i);

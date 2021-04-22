@@ -51,7 +51,7 @@ function makePieces(pieceWidth, pieceHeight) {
     let piece;
     let xPos = 0;
     let yPos = 0;
-    _empty = new Piece(pieceWidth, pieceHeight, xPos, yPos, xPos, yPos, 0);
+    _empty = new Piece(pieceWidth, pieceHeight, xPos, yPos, xPos, yPos, -1);
     for (let i = 0; i < _rows; i++) {
         xPos = 0;
         for (let j = 0; j < _cols; j++) {
@@ -85,79 +85,121 @@ function shufflePuzzle() {
            yPos += piece.height;
        }
     }
-    // document.onclick = movePiece;
-    document.onclick = null;
+    _pieces.unshift(_empty);
+    document.onclick = movePiece;
+   // document.onclick = null;
     document.onmousemove = highlight;
-    document.addEventListener('touchstart', highlight, { passive: false });
-    document.addEventListener('touchend', movePiece, { passive: false });
-}
-
-function highlight(event) {
-    event.preventDefault();
-    let mouse = {};
-    let rect = _canvas.getBoundingClientRect();
-    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
-    let scaleY = _canvas.height / rect.height;
-    mouse.x = (event.clientX - rect.left) * scaleX;
-    mouse.y = (event.clientY - rect.top) * scaleY;
-    let current = getPieceClicked(mouse);
-    for (let i = 0; i < _pieces.length; i++) {
-        _stage.drawImage(_img, _pieces[i].sx, _pieces[i].sy, _pieces[i].width, _pieces[i].height,
-            _pieces[i].xPos, _pieces[i].yPos, _pieces[i].width, _pieces[i].height);
-        if (current != null && checkIfNextToEmpty(current)) {
-            _stage.save();
-            _stage.fillStyle = "orange";
-            _stage.globalAlpha = .03;
-            _stage.fillRect(current.xPos, current.yPos, current.width, current.height);
-            _stage.restore();
-         }
-    }
-}
-
-function movePiece(event) {
-    event.preventDefault();
-    let mouse = {};
-    let rect = _canvas.getBoundingClientRect();
-    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
-    let scaleY = _canvas.height / rect.height;
-    mouse.x = (event.clientX - rect.left) * scaleX;
-    mouse.y = (event.clientY - rect.top) * scaleY;
-    let current = getPieceClicked(mouse);
-    if (current != null && checkIfNextToEmpty(current)) {
-        let tempX = _empty.xPos;
-        let tempY = _empty.yPos;
-        _empty.xPos = current.xPos;
-        _empty.yPos = current.yPos;
-        current.xPos = tempX;
-        current.yPos = tempY;
-        _stage.fillStyle = "#d54541";
-        _stage.fillRect(_empty.xPos, _empty.yPos, _empty.width, _empty.height);
-        _stage.drawImage(_img, current.sx, current.sy, current.width, current.height,
-            current.xPos, current.yPos, current.width, current.height);
-    }
-}
-
-function checkIfNextToEmpty(current) {
-     if ((current.xPos - current.width - _empty.xPos === 0 ||
-         current.xPos + current.width - _empty.xPos === 0) && current.yPos === _empty.yPos ||
-         (current.yPos - current.height - _empty.yPos === 0 ||
-          current.yPos + current.height - _empty.yPos === 0) && current.xPos === _empty.xPos) {
-         return true;
-     }
-    return false;
+    document.ontouchstart = highlight;
+    document.ontouchend = movePiece;
+    // document.addEventListener('touchstart', highlight, { passive: false });
+    // document.addEventListener('touchend', movePiece, { passive: false });
 }
 
 function getPieceClicked(mouse) {
     let piece;
     for(let i = 0; i < _pieces.length; i++) {
         piece = _pieces[i];
-        if ((mouse.x > piece.xPos && mouse.x < piece.xPos + piece.width)
+        if (piece.id !== 0 && (mouse.x > piece.xPos && mouse.x < piece.xPos + piece.width)
             && (mouse.y > piece.yPos && mouse.y < piece.yPos + piece.height)) {
-            return piece;
+            return [piece, i];
         }
     }
     return null;
 }
+
+function checkIfFinish() {
+    // if finished, then ids are sorted
+    for (let i = 0; i < _pieces.length - 1; i++) {
+        if (_pieces[i].id > _pieces[i + 1].id) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function checkIfNextToEmpty(current) {
+    if ((current.xPos - current.width - _empty.xPos === 0 ||
+        current.xPos + current.width - _empty.xPos === 0) && current.yPos === _empty.yPos ||
+        (current.yPos - current.height - _empty.yPos === 0 ||
+            current.yPos + current.height - _empty.yPos === 0) && current.xPos === _empty.xPos) {
+        return true;
+    }
+    return false;
+}
+
+function getEmpty() {
+    for (let i = 0; i < _pieces.length; i++) {
+        if (_pieces[i].id === -1) {
+            return i;
+        }
+    }
+}
+
+function highlight(event) {
+   // event.preventDefault();
+    let mouse = {};
+    let rect = _canvas.getBoundingClientRect();
+    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
+    let scaleY = _canvas.height / rect.height;
+    mouse.x = (event.clientX - rect.left) * scaleX;
+    mouse.y = (event.clientY - rect.top) * scaleY;
+    let values = getPieceClicked(mouse);
+    if (values != null) {
+        let current = values[0];
+        for (let i = 0; i < _pieces.length; i++) {
+            if (_pieces[i].id !== -1) {
+                _stage.drawImage(_img, _pieces[i].sx, _pieces[i].sy, _pieces[i].width, _pieces[i].height,
+                    _pieces[i].xPos, _pieces[i].yPos, _pieces[i].width, _pieces[i].height);
+                if (checkIfNextToEmpty(current)) {
+                    _stage.save();
+                    _stage.fillStyle = "orange";
+                    _stage.globalAlpha = .03;
+                    _stage.fillRect(current.xPos, current.yPos, current.width, current.height);
+                    _stage.restore();
+                }
+            }
+        }
+    }
+}
+
+function movePiece(event) {
+   // event.preventDefault();
+    let mouse = {};
+    let rect = _canvas.getBoundingClientRect();
+    let scaleX = _canvas.width / rect.width;   // relationship bitmap vs. element for X
+    let scaleY = _canvas.height / rect.height;
+    mouse.x = (event.clientX - rect.left) * scaleX;
+    mouse.y = (event.clientY - rect.top) * scaleY;
+    let values = getPieceClicked(mouse);
+    if (values != null) {
+        let current = values[0];
+        let index = values[1];
+        let emptyIdx = getEmpty();
+        if (checkIfNextToEmpty(current)) {
+            [_pieces[index], _pieces[emptyIdx]] = [_pieces[emptyIdx], _pieces[index]];
+            console.log(index + " " + emptyIdx);
+            let tempX = _empty.xPos;
+            let tempY = _empty.yPos;
+            _empty.xPos = current.xPos;
+            _empty.yPos = current.yPos;
+            current.xPos = tempX;
+            current.yPos = tempY;
+            _stage.fillStyle = "#d54541";
+            _stage.fillRect(_empty.xPos, _empty.yPos, _empty.width, _empty.height);
+            _stage.drawImage(_img, current.sx, current.sy, current.width, current.height,
+                current.xPos, current.yPos, current.width, current.height);
+            // check if user won
+            if (checkIfFinish()) {
+                // restart game
+                document.getElementById("modalfinish").style.display = "block";
+            }
+        }
+    }
+}
+function resetGame() {
+    start();
+}
+
 function start() {
     document.getElementById("instr1").style.display = "none";
     document.getElementById("gallery").style.display = "none";
