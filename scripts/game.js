@@ -13,8 +13,8 @@ var _empty;
 function shuffleArray(arr) { // empty space parity == 2, solvable is permutation is even
     let j = 0;
     let sum = 0;
-    console.log(arr.length);
-    for (let i = arr.length - 1; i > 0; i--) {
+
+    for (let i = arr.length - 1; i >= 0; i--) {
         j = parseInt(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
@@ -52,12 +52,14 @@ function makePieces(pieceWidth, pieceHeight) {
     let xPos = 0;
     let yPos = 0;
     _empty = new Piece(pieceWidth, pieceHeight, xPos, yPos, xPos, yPos, -1);
+    let counter = 0;
     for (let i = 0; i < _rows; i++) {
         xPos = 0;
         for (let j = 0; j < _cols; j++) {
-            if (i + j !== 0) {
-                piece = new Piece(pieceWidth, pieceHeight, xPos, yPos, xPos, yPos, i + j);
+            if (i + j  !== 0) {
+                piece = new Piece(pieceWidth, pieceHeight, xPos, yPos, xPos, yPos, counter);
                 _pieces.push(piece);
+                counter += 1;
             }
             xPos += pieceWidth;
         }
@@ -101,7 +103,7 @@ function getPieceClicked(mouse) {
     let piece;
     for(let i = 0; i < _pieces.length; i++) {
         piece = _pieces[i];
-        if (piece.id !== 0 && (mouse.x > piece.xPos && mouse.x < piece.xPos + piece.width)
+        if (piece.id !== -1 && (mouse.x > piece.xPos && mouse.x < piece.xPos + piece.width)
             && (mouse.y > piece.yPos && mouse.y < piece.yPos + piece.height)) {
             return [piece, i];
         }
@@ -160,7 +162,7 @@ function highlight(event) {
                 if (checkIfNextToEmpty(current)) {
                     _stage.save();
                     _stage.fillStyle = "orange";
-                    _stage.globalAlpha = .03;
+                    _stage.globalAlpha = .05;
                     _stage.fillRect(current.xPos, current.yPos, current.width, current.height);
                     _stage.restore();
                 }
@@ -200,7 +202,7 @@ function movePiece(event) {
             _stage.fillRect(_empty.xPos, _empty.yPos, _empty.width, _empty.height);
             _stage.drawImage(_img, current.sx, current.sy, current.width, current.height,
                 current.xPos, current.yPos, current.width, current.height);
-            // check if user won
+                 // check if user won
             if (checkIfFinish()) {
                 // restart game
                 document.getElementById("modalfinish").style.display = "block";
