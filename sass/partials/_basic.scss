@@ -1,0 +1,137 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: $primary-font;
+  overflow: hidden;
+}
+
+a {
+  &:focus, &:active, &:hover {
+    font-weight: bolder;
+    color: black !important;
+  }
+}
+
+h1 {
+  font-family: $header-font;
+  display: inline;
+  background: linear-gradient(to top, $primary-color 50%, transparent 50%);
+  @include mq {
+    font-size: 3em;
+  }
+}
+
+h2 {
+  @extend h1;
+  font-size: 2em;
+  @include mq {
+    font-size: 2.5em;
+  }
+}
+
+main {
+  margin-top: 2em;
+  padding: 1em;
+  width: 100%;
+  padding-top: 2.5em;
+}
+
+p {
+  font-size: 1.5em;
+  color: $primary-text-color;
+  line-height: 1.3em;
+  padding-bottom: 0.5em;
+  margin-bottom: 0;
+  @include mq {
+    font-size: 2em;
+  }
+}
+
+#greeting {
+  display: none;
+  margin: auto;
+  text-align: center;
+  @include mq {
+    width: 53%;
+  }
+}
+
+.more {
+  text-decoration: none;
+  color: $primary-text-color;
+  float: right;
+  background: linear-gradient(to top, $primary-color 40%, transparent 40%);
+  font-size: 1.3em;
+  line-height: 1.5em;
+  margin-right: 1em;
+  &::after {
+    content: '\2192';
+  }
+  @include mq {
+    margin-right: 2em;
+    font-size: 1.6em;
+  }
+}
+
+.work-pane {
+  margin-top: 5em;
+  visibility: hidden;
+  position: relative;
+  top: 100vh;
+  transition: all 1s ease-out;
+  text-align: center;
+}
+
+button {
+  text-transform: uppercase;
+  border: $primary-color solid 2px;
+  background: transparent;
+  border-radius: 8px;
+  margin: .2em;
+  margin-bottom: .5em;
+  padding: .2em;
+  &:focus, &:active, &:hover {
+    background: $primary-color;
+    color: white;
+  }
+  @include mq {
+    font-size: 1.3em;
+    margin: .5em;
+  }
+}
+
+.article {
+  margin: auto;
+  width: 80%;
+  margin-bottom: 3em;
+  @include mq {
+    width: 60%;
+  }
+}
+
+.list-education {
+  list-style-type: none;
+  font-size: 1.5em;
+  color: $primary-text-color;
+  line-height: 1.3em;
+  padding-bottom: 0.5em;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-left: 0;
+  @include mq {
+    font-size: 2em;
+  }
+  b {
+    color: black;
+  }
+}

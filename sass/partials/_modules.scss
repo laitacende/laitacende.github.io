@@ -1,0 +1,184 @@
+//=====================================
+// Main navigation
+//====================================
+
+.header {
+  background: white;
+}
+
+.main-nav {
+  background: $background-color;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 1.5em;
+  padding-bottom: 1em;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  z-index: 2;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.fab, .fas {
+  font-size: 2em;
+  color: $primary-text-color;
+  &:active, &:hover, &:focus {
+    color: $primary-color;
+    transform: scale(1.3);
+  }
+}
+
+.icon-caption {
+  color: $primary-text-color;
+  text-transform: uppercase;
+  font-size: .7em;
+  display: none;
+  @include mq {
+    display: block;
+  }
+}
+
+#icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 40%;
+  padding: 0;
+  margin: 0;
+}
+
+.icon {
+  padding-right: .5em;
+  padding-left: .5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+#hamburger {
+  z-index: 2;
+  width: 2em;
+  height: 2em;
+  position: relative;
+  margin-right: 1em;
+  margin-top: .2em;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+  span {
+    display: block;
+    position: absolute;
+    height: .25em;
+    width: 100%;
+    background: $primary-text-color;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+
+    &:nth-child(1) {
+      top: 0;
+      -webkit-transform-origin: left center;
+      -moz-transform-origin: left center;
+      -o-transform-origin: left center;
+      transform-origin: left center;
+    }
+
+    &:nth-child(2) {
+      top: .6em;
+      -webkit-transform-origin: left center;
+      -moz-transform-origin: left center;
+      -o-transform-origin: left center;
+      transform-origin: left center;
+    }
+
+    &:nth-child(3) {
+      top: 1.25em;
+      -webkit-transform-origin: left center;
+      -moz-transform-origin: left center;
+      -o-transform-origin: left center;
+      transform-origin: left center;
+    }
+  }
+}
+
+#hamburger.open span:nth-child(1) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  top: 0;
+}
+
+#hamburger.open span:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+#hamburger.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 1.4em;
+}
+
+//=====================================
+// Overlay list
+//====================================
+
+#nav-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  a {
+    color: $primary-text-color;
+    text-decoration: none;
+    font-size: 3.5em;
+    line-height: 2em;
+    &:focus, &:active, &:hover {
+      background: linear-gradient(to top, $primary-color 40%, transparent 40%);
+    }
+    @include mq {
+      font-size: 4.5em;
+    }
+  }
+}
+
+.active {
+  background: linear-gradient(to top, $primary-color 40%, transparent 40%);
+  font-weight: bolder;
+  color: black !important;
+}
+
+.overlay {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background: $background-color;
+  display: none;
+  text-align: center;
+}
