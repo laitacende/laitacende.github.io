@@ -25,7 +25,7 @@
                     <p class="icon-caption">Github</p>
                 </div>
                 <div class="icon">
-                    <a href="https://www.linkedin.com/in/aleksandra-go%C5%82%C4%99biowska-5a75a8218/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
                     <p class="icon-caption">Linkedin</p>
                 </div>
                 <div class="icon">
@@ -62,15 +62,47 @@
         </article>
         <article class="work-pane">
             <div class="buttons">
-                <button id="web">Web development & design</button>
+                <button id="web" class="active-button">Web development & design</button>
                 <button id="ux">UX design</button>
                 <button id="android">Android development</button>
                 <button id="java">Java development</button>
             </div>
+            <article class="work">
+                <article id="web-work" >
+                    <a href="projects/nabla.html" class="work-item">
+                        <img src="img/projects/nabla.png" alt="Physics Student Society Nabla website">
+                        <div class="overlay-item">
+                            <div class="text">Physics Student Society Nabla website</div>
+                        </div>
+                    </a>
+                    <a href="projects/dwarfrunner.html" class="work-item">
+                        <img src="img/projects/dwarfrunner.png" alt="Student project: Dwarf Runner">
+                        <div class="overlay-item">
+                            <div class="text">Student project: Dwarf Runner</div>
+                        </div>
+                    </a>
+                </article>
+                <article id="ux-work" class="hidden">
+                    <a href="projects/dwarfrunner.html" class="work-item">
+                        <img src="img/projects/dwarfrunner.png" alt="Student project: Dwarf Runner">
+                        <div class="overlay-item">
+                            <div class="text">Student project: Dwarf Runner</div>
+                        </div>
+                    </a>
+                </article>
+
+                <article id="android-work" class="hidden">
+                </article>
+
+                <article id="java-work" class="hidden">
+                </article>
+
+            </article>
         </article>
     </main>
     <script src="js/index_animations.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/buttons-work.js"></script>
 </body>
 </html>
 

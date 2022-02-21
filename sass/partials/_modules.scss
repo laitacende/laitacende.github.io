@@ -25,6 +25,10 @@
   width: 100%;
 }
 
+.sticky + main {
+  padding-top: 100em;
+}
+
 .fab, .fas {
   font-size: 2em;
   color: $primary-text-color;
